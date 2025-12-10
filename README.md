@@ -216,4 +216,32 @@ GameHub Lite expects a custom action, specific `Activity`, a game ID and even ad
 
 
 ### StreamingApps
-TBD
+`streamingApps` is a list of objects which refer to Apps in which a user can launch game streams.
+
+#### StreamingApp
+Contains the `packageName` as the unique reference to App and an optional platform reference for the scraping function.
+
+- **`packageName` (Required):** The package name of the Streaming App. This is the unique identifier of an Android App. If the App with this `packageName` is installed on the device, it will automatically appear in the "Streaming" category.
+- **`supportedPlatforms`:** Contains references to the platforms the streamed games are running on. The list references the unique `keys` of the platforms in the `platforms` list. A platform with that `key` must exist. The platform is used for finding better matches for game covers when scraping.
+
+> [!IMPORTANT]  
+> Although `supportedPlatforms` is a list, only one platform reference is supported at the moment. Only the first reference is considered.
+
+**Examples**
+
+Mark "Artemis" as a game streaming App and specify that the scraper should search in Windows games:
+```json
+{
+    "packageName": "com.limelight.noir",
+    "supportedPlatforms": [
+        "win"
+    ]
+}
+```
+
+Mark "PXPlay" as a game streaming App. No platform is specified, because the games can be streamed from both a PlayStation 4 and PlayStation 5, but currently we only support one platform reference. If no reference is set, the scraper searches on all platforms.
+```json
+{
+    "packageName": "psplay.grill.com"
+}
+```
